@@ -1,0 +1,113 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Platform user information including roles and balance",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "admin"] },
+        "balance": { "type": "number", "description": "Wallet balance in USD" },
+        "isVerified": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role", "balance"]
+    },
+    "Advertisement": {
+      "title": "Advertisement",
+      "description": "Details of a user-submitted advertisement",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "mediaUrl": { "type": "string" },
+        "mediaType": { "type": "string", "enum": ["image", "video"] },
+        "link": { "type": "string" },
+        "category": { "type": "string" },
+        "targeting": {
+          "type": "object",
+          "properties": {
+            "country": { "type": "string" },
+            "city": { "type": "string" }
+          }
+        },
+        "budget": { "type": "number" },
+        "duration": { "type": "number", "description": "Duration in days" },
+        "status": { "type": "string", "enum": ["pending", "active", "rejected", "paused", "expired"] },
+        "rejectionReason": { "type": "string" },
+        "stats": {
+          "type": "object",
+          "properties": {
+            "views": { "type": "number" },
+            "clicks": { "type": "number" }
+          }
+        },
+        "createdAt": { "type": "number" },
+        "approvedAt": { "type": "number" }
+      },
+      "required": ["ownerId", "title", "status", "budget"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Financial records for deposits and ad spends",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "amount": { "type": "number" },
+        "type": { "type": "string", "enum": ["deposit", "spend", "refund"] },
+        "method": { "type": "string", "enum": ["google_pay", "google_play", "internal"] },
+        "status": { "type": "string", "enum": ["completed", "pending", "failed"] },
+        "description": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["userId", "amount", "type", "createdAt"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "User notifications",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string", "enum": ["approval", "rejection", "payment", "expiration", "system"] },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["userId", "title", "message", "type", "read", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users": {
+      "schema": "User",
+      "description": "Stores user profiles and roles"
+    },
+    "ads": {
+      "schema": "Advertisement",
+      "description": "Stores all advertisement submissions"
+    },
+    "transactions": {
+      "schema": "Transaction",
+      "description": "Stores financial records"
+    },
+    "notifications": {
+      "schema": "Notification",
+      "description": "Stores user notifications"
+    },
+    "categories": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "icon": { "type": "string" }
+        }
+      },
+      "description": "Available ad categories"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "AdVantage Pro",
+  "description": "A high-performance advertising platform for social communities, businesses, and services with AI-powered moderation and real-time analytics.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "Real-time Ad Monitoring",
+    "AI Content Moderation",
+    "Cross-platform Dashboard",
+    "Integrated Wallet System"
+  ]
+}
